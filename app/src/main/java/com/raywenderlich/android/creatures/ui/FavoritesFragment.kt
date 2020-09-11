@@ -31,22 +31,39 @@
 package com.raywenderlich.android.creatures.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.raywenderlich.android.creatures.R
+import com.raywenderlich.android.creatures.model.CreatureStore
+import kotlinx.android.synthetic.main.fragment_favorites.*
 
 
 class FavoritesFragment : Fragment() {
+    private val adapter = CreaturesAdapter(mutableListOf())
 
-  companion object {
-    fun newInstance(): FavoritesFragment {
-      return FavoritesFragment()
+    companion object {
+        fun newInstance(): FavoritesFragment {
+            return FavoritesFragment()
+        }
     }
-  }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-    return inflater.inflate(R.layout.fragment_favorites, container, false)
-  }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.fragment_favorites, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        favorites_creatures.layoutManager = LinearLayoutManager(activity)
+        favorites_creatures.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.let {
+            CreatureStore.getFavoriteCreatures(it)?.let { favorites -> adapter.updateCreatures(favorites) }
+        }
+    }
 }

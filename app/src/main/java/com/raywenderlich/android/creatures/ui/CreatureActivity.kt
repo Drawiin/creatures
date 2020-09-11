@@ -100,7 +100,7 @@ class CreatureActivity : AppCompatActivity() {
   }
 
   private fun setupFavoriteButtonClickListener(creature: Creature) {
-    favoriteButton.setOnClickListener { _ ->
+    favoriteButton.setOnClickListener {
       if (creature.isFavorite) {
         favoriteButton.setImageDrawable(getDrawable(R.drawable.ic_favorite_border_black_24dp))
         Favorites.removeFavorite(creature, this)

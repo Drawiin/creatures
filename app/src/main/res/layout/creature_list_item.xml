@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/creature_item_height">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/creature_item_height"
+        android:layout_height="@dimen/creature_item_height"
+        android:layout_marginStart="@dimen/padding_standard"
+        android:contentDescription="@string/creature_img_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/fullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/padding_standard"
+        android:layout_marginVertical="@dimen/padding_half"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/font_20"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/img"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/nickname"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Full Name" />
+
+    <TextView
+        android:id="@+id/nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/padding_standard"
+        android:layout_marginBottom="@dimen/padding_half"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img"
+        app:layout_constraintTop_toBottomOf="@+id/fullName"
+        tools:text="nickname" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
