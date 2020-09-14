@@ -31,33 +31,32 @@
 package com.raywenderlich.android.creatures.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.raywenderlich.android.creatures.R
 import com.raywenderlich.android.creatures.model.CreatureStore
 import kotlinx.android.synthetic.main.fragment_all.*
 
-
 class AllFragment : Fragment() {
-  private val adapter = CreaturesCardAdapter(CreatureStore.getCreatures().toMutableList())
+    private val adapter = CreaturesCardAdapter(CreatureStore.getCreatures().toMutableList())
 
-  companion object {
-    fun newInstance(): AllFragment {
-      return AllFragment()
+    companion object {
+        fun newInstance(): AllFragment {
+            return AllFragment()
+        }
     }
-  }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-    return inflater.inflate(R.layout.fragment_all, container, false)
-  }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.fragment_all, container, false)
+    }
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    all_creatures.layoutManager = GridLayoutManager(activity, 2)
-    all_creatures.adapter = adapter
-  }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        all_creatures.layoutManager = layoutManager
+        all_creatures.adapter = adapter
+    }
 }
