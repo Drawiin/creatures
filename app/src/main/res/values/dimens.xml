@@ -11,4 +11,8 @@
     <dimen name="creature_item_height">100dp</dimen>
     <dimen name="font_20">20sp</dimen>
     <dimen name="font_14">14sp</dimen>
+    <dimen name="card_elevation">3dp</dimen>
+    <dimen name="card_corner_radius">0dp</dimen>
+    <dimen name="card_img_size">150dp</dimen>
+    <dimen name="card_nickname_holder_height">36dp</dimen>
 </resources>

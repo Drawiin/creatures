@@ -35,6 +35,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raywenderlich.android.creatures.R
 import com.raywenderlich.android.creatures.model.CreatureStore
@@ -42,7 +43,7 @@ import kotlinx.android.synthetic.main.fragment_all.*
 
 
 class AllFragment : Fragment() {
-  private val adapter = CreaturesWithFoodAdapter(CreatureStore.getCreatures().toMutableList())
+  private val adapter = CreaturesCardAdapter(CreatureStore.getCreatures().toMutableList())
 
   companion object {
     fun newInstance(): AllFragment {
@@ -56,7 +57,7 @@ class AllFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    all_creatures.layoutManager = LinearLayoutManager(activity)
+    all_creatures.layoutManager = GridLayoutManager(activity, 2)
     all_creatures.adapter = adapter
   }
 }
