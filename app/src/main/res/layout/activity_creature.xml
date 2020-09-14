@@ -62,7 +62,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/foods_list"
         android:layout_width="0dp"
-        android:layout_height="@dimen/creature_item_height"
+        android:layout_height="0dp"
         android:layout_marginVertical="@dimen/padding_standard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

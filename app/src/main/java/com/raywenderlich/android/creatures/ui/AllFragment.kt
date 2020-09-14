@@ -31,10 +31,9 @@
 package com.raywenderlich.android.creatures.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.raywenderlich.android.creatures.R
 import com.raywenderlich.android.creatures.model.CreatureStore
@@ -42,6 +41,14 @@ import kotlinx.android.synthetic.main.fragment_all.*
 
 class AllFragment : Fragment() {
     private val adapter = CreaturesCardAdapter(CreatureStore.getCreatures().toMutableList())
+    private lateinit var layoutManager: StaggeredGridLayoutManager
+    private lateinit var listItemDecoration: RecyclerView.ItemDecoration
+    private lateinit var gridItemDecoration: RecyclerView.ItemDecoration
+    private lateinit var listMenuItem: MenuItem
+    private lateinit var gridMenuItem: MenuItem
+    private var gridState = GridState.GRID
+
+    private enum class GridState { LIST, GRID }
 
     companion object {
         fun newInstance(): AllFragment {
@@ -53,10 +60,67 @@ class AllFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_all, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_all, menu)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         all_creatures.layoutManager = layoutManager
         all_creatures.adapter = adapter
+        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.padding_standard)
+        listItemDecoration = SpacingItemDecoration(1, spacingInPixels)
+        gridItemDecoration = SpacingItemDecoration(2, spacingInPixels)
+        all_creatures.addItemDecoration(gridItemDecoration)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        listMenuItem = menu.findItem(R.id.action_span_1)
+        gridMenuItem = menu.findItem(R.id.action_span_2)
+        when(gridState){
+            GridState.GRID -> {
+                gridMenuItem.isVisible = false
+                listMenuItem.isEnabled = true
+            }
+            GridState.LIST -> {
+                gridMenuItem.isVisible = true
+                listMenuItem.isEnabled = false
+            }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.action_span_1 -> {
+                gridState = GridState.LIST
+                updateRecyclerview(1, listItemDecoration, gridItemDecoration)
+                return true
+            }
+            R.id.action_span_2 -> {
+                gridState = GridState.GRID
+                updateRecyclerview(2, gridItemDecoration, listItemDecoration)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateRecyclerview(
+        spanCount: Int,
+        addItemDecoration: RecyclerView.ItemDecoration,
+        removeItemDecoration: RecyclerView.ItemDecoration
+    ) {
+        layoutManager.spanCount = spanCount
+        all_creatures.removeItemDecoration(removeItemDecoration)
+        all_creatures.addItemDecoration(addItemDecoration)
     }
 }
