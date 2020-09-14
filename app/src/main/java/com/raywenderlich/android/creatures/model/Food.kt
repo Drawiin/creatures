@@ -31,4 +31,6 @@
 package com.raywenderlich.android.creatures.model
 
 
-data class Food(val id: Int, val name: String, val image: String)
+data class Food(val id: Int, val name: String, val image: String) {
+    val tumb: String get() = "drawable/thumbnail_$image"
+}
